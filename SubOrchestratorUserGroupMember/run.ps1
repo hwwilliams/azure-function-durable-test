@@ -14,12 +14,6 @@ try {
     }
     $retryPolicy = New-DurableRetryPolicy @retryPolicyParameters
 
-    $randomNumberParameters = @{
-        FunctionName = "ActivityGetRandomNumber"
-        RetryOptions = $retryPolicy
-    }
-    $randomNumber = Invoke-DurableActivity @randomNumberParameters
-
     $EncounterRandomErrorParameters = @{
         FunctionName = "ActivityEncounterRandomError"
         RetryOptions = $retryPolicy
@@ -29,7 +23,6 @@ try {
     Write-Log "Message after error inside sub orchestrator" -OrchestrationContext $Context
 
     $processUserGroupMemberInput = @{
-        Seconds             = $randomNumber
         UserGroupMemberName = $Context.Input.UserGroupMemberName
         UserGroupName       = $Context.Input.UserGroupName
     }
