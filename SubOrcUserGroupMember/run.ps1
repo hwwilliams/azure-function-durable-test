@@ -15,12 +15,12 @@ $retryPolicy = New-DurableRetryPolicy @retryPolicyParameters
 
 try {
     $EncounterRandomErrorParameters = @{
-        FunctionName = "ActivityEncounterRandomError"
+        FunctionName = "ActEncounterRandomError"
         RetryOptions = $retryPolicy
     }
     Invoke-DurableActivity @EncounterRandomErrorParameters
 } catch {
-    Write-Log "Failed to invoke activity 'ActivityEncounterRandomError' due to error '$($PSItem.Exception.Message)'" -OrchestrationContext $Context
+    Write-Log "Failed to invoke activity 'ActEncounterRandomError' due to error '$($PSItem.Exception.Message)'" -OrchestrationContext $Context
     throw $PSItem
 }
 

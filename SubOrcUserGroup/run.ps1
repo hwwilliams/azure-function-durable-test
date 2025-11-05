@@ -19,13 +19,13 @@ try {
         UserGroupName        = $Context.Input.UserGroupName
     }
     $userGroupMembersParameters = @{
-        FunctionName = "ActivityGetUserGroupMembers"
+        FunctionName = "ActGetUserGroupMembers"
         Input        = $userGroupMembersInput
         RetryOptions = $retryPolicy
     }
     $userGroupMembers = Invoke-DurableActivity @userGroupMembersParameters
 } catch {
-    Write-Log "Failed to invoke activity 'ActivityGetUserGroupMembers' due to error '$($PSItem.Exception.Message)'" -OrchestrationContext $Context
+    Write-Log "Failed to invoke activity 'ActGetUserGroupMembers' due to error '$($PSItem.Exception.Message)'" -OrchestrationContext $Context
     throw $PSItem
 }
 
@@ -36,7 +36,7 @@ try {
             UserGroupName       = $Context.Input.UserGroupName
         }
         $userGroupMemberParameters = @{
-            FunctionName = "SubOrchestratorUserGroupMember"
+            FunctionName = "SubOrcUserGroupMember"
             Input        = $userGroupMemberInput
             NoWait       = $true
         }
@@ -50,6 +50,6 @@ try {
     Write-Log "user group member sub orchestrator results: $($userGroupMemberResults | ConvertTo-Json -Depth 100)" -OrchestrationContext $Context
     return $userGroupMemberResults
 } catch {
-    Write-Log "Failed to invoke sub orchestrator 'SubOrchestratorUserGroupMember' due to error '$($PSItem.Exception.Message)'" -OrchestrationContext $Context
+    Write-Log "Failed to invoke sub orchestrator 'SubOrcUserGroupMember' due to error '$($PSItem.Exception.Message)'" -OrchestrationContext $Context
     throw $PSItem
 }
