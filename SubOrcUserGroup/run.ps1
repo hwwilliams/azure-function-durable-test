@@ -15,7 +15,7 @@ $retryPolicy = New-DurableRetryPolicy @retryPolicyParameters
 
 try {
     $userGroupMembersInput = @{
-        UserGroupMemberCount = 1000
+        UserGroupMemberCount = 1
         UserGroupName        = $Context.Input.UserGroupName
     }
     $userGroupMembersParameters = @{

@@ -13,16 +13,16 @@ $retryPolicyParameters = @{
 }
 $retryPolicy = New-DurableRetryPolicy @retryPolicyParameters
 
-try {
-    $EncounterRandomErrorParameters = @{
-        FunctionName = "ActGetRandomError"
-        RetryOptions = $retryPolicy
-    }
-    Invoke-DurableActivity @EncounterRandomErrorParameters
-} catch {
-    Write-Log "Failed to invoke activity 'ActGetRandomError' due to error '$($PSItem.Exception.Message)'" -OrchestrationContext $Context
-    throw $PSItem
-}
+# try {
+#     $EncounterRandomErrorParameters = @{
+#         FunctionName = "ActGetRandomError"
+#         RetryOptions = $retryPolicy
+#     }
+#     Invoke-DurableActivity @EncounterRandomErrorParameters
+# } catch {
+#     Write-Log "Failed to invoke activity 'ActGetRandomError' due to error '$($PSItem.Exception.Message)'" -OrchestrationContext $Context
+#     throw $PSItem
+# }
 
 try {
     $processUserGroupMemberInput = @{
@@ -30,7 +30,7 @@ try {
         UserGroupName       = $Context.Input.UserGroupName
     }
     $processUserGroupMemberParameters = @{
-        FunctionName = "ActivityProcessUserGroupMember"
+        FunctionName = "ActProcessUserGroupMember"
         Input        = $processUserGroupMemberInput
         RetryOptions = $retryPolicy
     }
@@ -42,6 +42,6 @@ try {
         UserGroupName       = $Context.Input.UserGroupName
     }
 } catch {
-    Write-Log "Failed to invoke activity 'ActivityProcessUserGroupMember' due to error '$($PSItem.Exception.Message)'" -OrchestrationContext $Context
+    Write-Log "Failed to invoke activity 'ActProcessUserGroupMember' due to error '$($PSItem.Exception.Message)'" -OrchestrationContext $Context
     throw $PSItem
 }

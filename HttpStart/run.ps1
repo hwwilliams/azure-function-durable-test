@@ -9,5 +9,5 @@ $InformationPreference = 'Continue'
 $instanceId = Start-DurableOrchestration -FunctionName "OrcMain"
 Write-Information "Started orchestration with ID = '$instanceId'"
 
-$response = New-DurableResponse -StatusCode 202 -Location "/api/status/$instanceId"
+$response = New-DurableOrchestrationCheckStatusResponse -Request $Request -InstanceId $instanceId
 Push-OutputBinding -Name response -Value $response
