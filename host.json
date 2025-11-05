@@ -2,7 +2,9 @@
   "version": "2.0",
   "extensions": {
     "durableTask": {
-      "hubName": "DemoHub"
+      "hubName": "DemoHub",
+      "maxConcurrentActivityFunctions": 50,
+      "maxConcurrentOrchestratorFunctions": 100
     }
   },
   "extensionBundle": {
@@ -12,7 +14,7 @@
   "managedDependency": {
     "enabled": true
   },
-  "functionTimeout": "00:05:00",
+  "functionTimeout": "01:00:00",
   "watchDirectories": [
     "Modules"
   ]
