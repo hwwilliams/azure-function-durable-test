@@ -14,11 +14,16 @@ try {
     }
     $retryPolicy = New-DurableRetryPolicy @retryPolicyParameters
 
+    $userGroupsInput = @{
+        UserGroupCount = 1
+    }
     $userGroupsParameters = @{
         FunctionName = "ActivityGetUserGroups"
+        Input        = $userGroupsInput
         RetryOptions = $retryPolicy
     }
     $userGroups = Invoke-DurableActivity @userGroupsParameters
+
     $userGroupTasks = foreach ($userGroupName in $userGroups) {
         $userGroupInput = @{
             UserGroupName = $userGroupName
