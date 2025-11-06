@@ -6,7 +6,8 @@ $InformationPreference = 'Continue'
 
 Write-Log "Getting user groups"
 
-$userGroups = for ($i = 1; $i -le $param.UserGroupCount; $i++) {
+$userGroups = for ($i = 1; $i -le $param.UserGroupCount; $i++)
+{
     "UserGroup$i"
 }
 

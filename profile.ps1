@@ -11,24 +11,24 @@
 
 # Authenticate with Azure PowerShell using MSI.
 # Remove this if you are not planning on using MSI or Azure PowerShell.
-if ($env:MSI_SECRET) {
+if ($env:MSI_SECRET)
+{
     Disable-AzContextAutosave -Scope Process | Out-Null
     Connect-AzAccount -Identity
 }
 
-$env:ExternalDurablePowerShellSDK = "true"
-Import-Module -Name "AzureFunctions.PowerShell.Durable.SDK" -ErrorAction Stop
+# Import-Module -Name "AzureFunctions.PowerShell.Durable.SDK" -ErrorAction Stop
 
-function Write-Log {
+function Write-Log
+{
     param(
         [string] $Message,
-        [string] $Level = "INFO",
         [Object] $OrchestrationContext
     )
 
-    if ($OrchestrationContext.IsReplaying) {
+    if ($OrchestrationContext.IsReplaying)
+    {
         return
     }
-    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    Write-Information "[$timestamp] - [$Level] - $Message"
+    Write-Information $Message
 }

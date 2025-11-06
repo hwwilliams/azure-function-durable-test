@@ -10,11 +10,13 @@ $users = @(
 )
 
 $name = $Request.Query.Name
-if (-not $name) {
+if (-not $name)
+{
     $name = $Request.Body.Name
 }
 
-if ($name) {
+if ($name)
+{
     Start-Sleep -Seconds 35
     $body = $users.where({ $PSItem.Name -ieq $name })
 }
