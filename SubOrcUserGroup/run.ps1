@@ -6,23 +6,23 @@ $InformationPreference = 'Continue'
 
 Write-Log "Running sub orchestrator for user group '$($Context.Input.UserGroupName)'" -OrchestrationContext $Context
 
-# $retryPolicyParameters = @{
-#     BackoffCoefficient  = 2.0
-#     FirstRetryInterval  = (New-TimeSpan -Seconds 3)
-#     MaxNumberOfAttempts = 3
-# }
-# $retryPolicy = New-DurableRetryPolicy @retryPolicyParameters
+$retryPolicyParameters = @{
+    BackoffCoefficient  = 2.0
+    FirstRetryInterval  = (New-TimeSpan -Seconds 3)
+    MaxNumberOfAttempts = 3
+}
+$retryPolicy = New-DurableRetryPolicy @retryPolicyParameters
 
 try
 {
     $userGroupMembersInput = @{
-        UserGroupMemberCount = [Int] $Context.Input.UserGroupMemberCount
-        UserGroupName        = [String] $Context.Input.UserGroupName
+        UserGroupMemberCount = $Context.Input.UserGroupMemberCount
+        UserGroupName        = $Context.Input.UserGroupName
     }
     $userGroupMembersParameters = @{
         FunctionName = "ActGetUserGroupMembers"
         Input        = $userGroupMembersInput
-        # RetryOptions = $retryPolicy
+        RetryOptions = $retryPolicy
     }
     [String[]] $userGroupMembers = Invoke-DurableActivity @userGroupMembersParameters
 }
@@ -38,8 +38,8 @@ try
     foreach ($userGroupMemberName in $userGroupMembers)
     {
         $userGroupMemberInput = @{
-            UserGroupMemberName = [String] $UserGroupMemberName
-            UserGroupName       = [String] $Context.Input.UserGroupName
+            UserGroupMemberName = $UserGroupMemberName
+            UserGroupName       = $Context.Input.UserGroupName
         }
         $instanceId = "sub-orc-user-group-member-$UserGroupMemberName"
         $userGroupMemberParameters = @{

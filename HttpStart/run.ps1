@@ -9,8 +9,8 @@ $InformationPreference = 'Continue'
 Write-Log "Request: $($Request.Body | ConvertTo-Json -Depth 100 -Compress)"
 
 $mainInput = @{
-    UserGroupCount       = [Int] $Request.Body.UserGroupCount
-    UserGroupMemberCount = [Int] $Request.Body.UserGroupMemberCount
+    UserGroupCount       = $Request.Body.UserGroupCount
+    UserGroupMemberCount = $Request.Body.UserGroupMemberCount
 }
 $mainParameters = @{
     FunctionName = "OrcMain"

@@ -6,12 +6,12 @@ $InformationPreference = 'Continue'
 
 Write-Log "Running sub orchestrator for user group member '$($Context.Input.UserGroupMemberName)'" -OrchestrationContext $Context
 
-# $retryPolicyParameters = @{
-#     BackoffCoefficient  = 2.0
-#     FirstRetryInterval  = (New-TimeSpan -Seconds 3)
-#     MaxNumberOfAttempts = 3
-# }
-# $retryPolicy = New-DurableRetryPolicy @retryPolicyParameters
+$retryPolicyParameters = @{
+    BackoffCoefficient  = 2.0
+    FirstRetryInterval  = (New-TimeSpan -Seconds 3)
+    MaxNumberOfAttempts = 3
+}
+$retryPolicy = New-DurableRetryPolicy @retryPolicyParameters
 
 $EncounterError = $false
 if ($EncounterError)
@@ -20,7 +20,7 @@ if ($EncounterError)
     {
         $EncounterRandomErrorParameters = @{
             FunctionName = "ActGetRandomError"
-            # RetryOptions = $retryPolicy
+            RetryOptions = $retryPolicy
         }
         Invoke-DurableActivity @EncounterRandomErrorParameters
     }
@@ -34,13 +34,13 @@ if ($EncounterError)
 try
 {
     $processUserGroupMemberInput = @{
-        UserGroupMemberName = [String] $Context.Input.UserGroupMemberName
-        UserGroupName       = [String] $Context.Input.UserGroupName
+        UserGroupMemberName = $Context.Input.UserGroupMemberName
+        UserGroupName       = $Context.Input.UserGroupName
     }
     $processUserGroupMemberParameters = @{
         FunctionName = "ActProcessUserGroupMember"
         Input        = $processUserGroupMemberInput
-        # RetryOptions = $retryPolicy
+        RetryOptions = $retryPolicy
     }
     Invoke-DurableActivity @processUserGroupMemberParameters
 

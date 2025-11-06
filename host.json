@@ -4,7 +4,11 @@
     "durableTask": {
       "hubName": "TestHub5",
       "maxConcurrentActivityFunctions": 10,
-      "maxConcurrentOrchestratorFunctions": 10
+      "maxConcurrentOrchestratorFunctions": 10,
+      "tracing": {
+        "distributedTracingEnabled": true,
+        "version": "None"
+      }
     }
   },
   "extensionBundle": {

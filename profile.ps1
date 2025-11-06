@@ -17,7 +17,7 @@ if ($env:MSI_SECRET)
     Connect-AzAccount -Identity
 }
 
-# Import-Module -Name "AzureFunctions.PowerShell.Durable.SDK" -ErrorAction Stop
+Import-Module -Name "AzureFunctions.PowerShell.Durable.SDK" -ErrorAction Stop
 
 function Write-Log
 {

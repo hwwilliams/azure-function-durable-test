@@ -6,24 +6,24 @@ $InformationPreference = 'Continue'
 
 Write-Log "Running main orchestrator" -OrchestrationContext $Context
 
-# $retryPolicyParameters = @{
-#     BackoffCoefficient  = 2.0
-#     FirstRetryInterval  = (New-TimeSpan -Seconds 3)
-#     MaxNumberOfAttempts = 3
-# }
-# $retryPolicy = New-DurableRetryPolicy @retryPolicyParameters
+$retryPolicyParameters = @{
+    BackoffCoefficient  = 2.0
+    FirstRetryInterval  = (New-TimeSpan -Seconds 3)
+    MaxNumberOfAttempts = 3
+}
+$retryPolicy = New-DurableRetryPolicy @retryPolicyParameters
 
 try
 {
     $userGroupsInput = @{
-        UserGroupCount = [Int] $Context.Input.UserGroupCount
+        UserGroupCount = $Context.Input.UserGroupCount
     }
     $userGroupsParameters = @{
         FunctionName = "ActGetUserGroups"
         Input        = $userGroupsInput
-        # RetryOptions = $retryPolicy
+        RetryOptions = $retryPolicy
     }
-    [String[]] $userGroups = Invoke-DurableActivity @userGroupsParameters
+    $userGroups = Invoke-DurableActivity @userGroupsParameters
 }
 catch
 {
@@ -37,8 +37,8 @@ try
     foreach ($userGroupName in $userGroups)
     {
         $userGroupInput = @{
-            UserGroupMemberCount = [Int] $Context.Input.UserGroupMemberCount
-            UserGroupName        = [String] $userGroupName
+            UserGroupMemberCount = $Context.Input.UserGroupMemberCount
+            UserGroupName        = $userGroupName
         }
         $instanceId = "sub-orc-user-group-$userGroupName"
         $userGroupParameters = @{
