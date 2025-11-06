@@ -10,6 +10,7 @@ Write-Log "Processing member '$($param.UserGroupMemberName)' from user group '$(
 # Start-Sleep -Seconds (Get-Random -Minimum 1 -Maximum 3)
 
 # $usersDirectory = Resolve-Path -Path './_users'
+# if (-not (Test-Path $usersDirectory)) { New-Item -Path $usersDirectory -ItemType Directory -Force | Out-Null }
 # $userFile = Join-Path -Path $usersDirectory -ChildPath "$($param.UserGroupName)-$($param.UserGroupMemberName)"
 # New-Item -Path $userFile -ItemType File -Force | Out-Null
 
